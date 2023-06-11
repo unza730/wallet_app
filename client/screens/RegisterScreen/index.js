@@ -109,10 +109,14 @@ const RegisterScreen = ({ navigation: { navigate } }) => {
                     >Forgot your password ?</Text>
                 </View> */}
                 <TouchableOpacity
+                 onPress={() => navigate("Home")}
                     style={{
+                        // padding: 12,
                         padding: Spacing * 2,
                         backgroundColor: Colors.primary,
-                        marginVertical: Spacing * 2,
+                        // marginVertical: Spacing * 2,
+                        marginVertical: 7,
+
                         borderRadius: Spacing,
                         shadowColor: Colors.primary,
                         shadowOffset: {

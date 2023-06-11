@@ -71,7 +71,10 @@ const LoginScreen = ({ navigation: { navigate } }) => {
                             color: 'white',
                             padding: Spacing * 2,
                             borderRadius: Spacing,
-                            marginVertical: Spacing
+                            // marginVertical: Spacing
+                            marginTop: Spacing,
+                            marginBottom: 0
+
                         }}
 
                     />
@@ -87,10 +90,13 @@ const LoginScreen = ({ navigation: { navigate } }) => {
                     >Forgot your password ?</Text>
                 </View>
                 <TouchableOpacity
+                 onPress={() => navigate("Home")}
                     style={{
                         padding: Spacing * 2,
                         backgroundColor: Colors.primary,
-                        marginVertical: Spacing * 3,
+                        // marginVertical: Spacing * 3,
+                        marginTop: Spacing * 3,
+                        marginBottom: 13,
                         borderRadius: Spacing,
                         shadowColor: Colors.primary,
                         shadowOffset: {

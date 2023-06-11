@@ -14,6 +14,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import History from '../screens/History';
 import SplashScreen from '../screens/SplashScreen';
+import { AntDesign } from '@expo/vector-icons';
 // import {
 //     HomeOutline,
 //     HeartOutline,
@@ -33,8 +34,9 @@ export default function AppNavigation() {
           contentStyle: { backgroundColor: 'white' }
         }}
       >
+          {/* <Stack.Screen name='History' options={{ headerShown: false }} component={History} /> */}
+      
         <Stack.Screen name='Splash' options={{ headerShown: false }} component={SplashScreen} />
-        <Stack.Screen name='History' options={{ headerShown: false }} component={History} />
         <Stack.Screen name='WelcomeScreen' options={{ headerShown: false }} component={WelcomeScreen} />
         <Stack.Screen name='Home' options={{ headerShown: false }} component={HomeTabs} />
         {/* <Stack.Screen name='Home' options={{headerShown: false}} component={HomeScreen} /> */}
@@ -106,6 +108,13 @@ function HomeTabs() {
       //   tabBarIcon: 'home',
       // }}
       />
+       <Tab.Screen
+        name="History"
+        component={History}
+      // options={{
+      //   tabBarIcon: 'account',
+      // }}
+      />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
@@ -113,13 +122,7 @@ function HomeTabs() {
       //   tabBarIcon: 'account',
       // }}
       />
-      <Tab.Screen
-        name="History"
-        component={History}
-      // options={{
-      //   tabBarIcon: 'account',
-      // }}
-      />
+     
     </Tab.Navigator>
   );
 }
@@ -128,24 +131,24 @@ const menuIcons = (route, focused) => {
   if (route.name == 'Home') {
     // iconName = focused ? 'home' : 'menu';
 
-    icon = focused ? <HomeSolid size='30' color={themeColors.bgLight} /> : <HomeOutline size='30' color="white" />
+    icon = focused ? <HomeSolid size='30' color="black" /> : <HomeOutline size='30' color="white" />
 
   } else if (route.name == 'History') {
-    icon = focused ? <HeartSolid size='30' color={themeColors.bgLight} /> : <HeartOutline size='30' strokeWidth={2} color='white' />
+    icon = focused ? <AntDesign name="clockcircle" size={24} color="black" /> : <AntDesign name="clockcircleo" size={24} color="white" />
   } else if (route.name == 'Profile') {
-    icon = focused ? <BagOutline size='30' color={themeColors.bgLight} /> : <BagOutline size='30' strokeWidth={2} color='white' />
+    icon = focused ? <AntDesign name="user" size={24} color="black" /> :<AntDesign name="user" size={24} color="white" />
 
   }
-  let buttonClass = focused ? { backgroundColor: '#fff' } : '';
+  let backgroundColor = focused ? 'white' : 'black';
+  let buttonClass = focused ? { backgroundColor: '#ffff' } : '';
   return (
     <View style={[
       styles.iconContainer,
-      buttonClass ? styles.iconContainerFocused : null,
+      { backgroundColor: backgroundColor },
+      focused ? styles.iconContainerFocused : null,
+      // buttonClass ? styles.iconContainerFocused : null,
     ]}>
       {icon}
-      {/* <MaterialIcons name={iconName} size='30' color={themeColors.bgLight} /> */}
-
-
     </View>
   )
 }
@@ -168,7 +171,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 9999,
+    borderRadius: 50,
     // padding: 12,
     padding: 7,
     shadowColor: '#000',
