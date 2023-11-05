@@ -15,6 +15,18 @@ import RegisterScreen from '../screens/RegisterScreen';
 import History from '../screens/History';
 import SplashScreen from '../screens/SplashScreen';
 import { AntDesign } from '@expo/vector-icons';
+import OtpScreen from '../screens/OtpScreen/OtpScreen';
+import SuccessScreen from '../screens/Scanning/SuccessScreen';
+import ScanningScreen from '../screens/Scanning/ScanningLoading';
+import PersonalWallet from '../screens/Wallet/PersonalWallet/PersonalWallet';
+import BusinessWallet from '../screens/Wallet/BusinessWallet/BusinessWallet';
+import Address from '../screens/Wallet/PersonalWallet/Address';
+import AddressBus from '../screens/Wallet/BusinessWallet/AddressBus';
+import ContactDetails from '../screens/Wallet/BusinessWallet/ContactDetails';
+import BusinessDetails from '../screens/Wallet/BusinessWallet/BusinessDetails';
+import TransactionList from '../screens/Transaction/TransactionList';
+import TransferFundForm from '../screens/Transfer/TranferFundForm';
+import TransferSelect from '../screens/Transfer/TransferSelect';
 // import {
 //     HomeOutline,
 //     HeartOutline,
@@ -42,6 +54,19 @@ export default function AppNavigation() {
         {/* <Stack.Screen name='Home' options={{headerShown: false}} component={HomeScreen} /> */}
         <Stack.Screen name='Login' options={{ headerShown: false }} component={LoginScreen} />
         <Stack.Screen name='Register' options={{ headerShown: false }} component={RegisterScreen} />
+        <Stack.Screen name='OTP' options={{ headerShown: false }} component={OtpScreen} />
+        <Stack.Screen name='Success' options={{ headerShown: false }} component={SuccessScreen} />
+        <Stack.Screen name='ScanningLoader' options={{ headerShown: false }} component={ScanningScreen} />
+        <Stack.Screen name='personal-wallet' options={{ headerShown: false }} component={PersonalWallet} />
+        <Stack.Screen name='personal-wallet-address' options={{ headerShown: false }} component={Address} />
+        <Stack.Screen name='business-wallet' options={{ headerShown: false }} component={BusinessWallet} />
+        <Stack.Screen name='business-wallet-address' options={{ headerShown: false }} component={AddressBus} />
+        <Stack.Screen name='business-wallet-business-details' options={{ headerShown: false }} component={BusinessDetails} />
+        <Stack.Screen name='business-wallet-contact' options={{ headerShown: false }} component={ContactDetails} />
+        <Stack.Screen name='transaction' options={{ headerShown: false }} component={TransactionList} />
+        <Stack.Screen name='transfer' options={{ headerShown: false }} component={TransferSelect} />
+        <Stack.Screen name='transfer-bank' options={{ headerShown: false }} component={TransferFundForm} />
+        <Stack.Screen name='transfer-wallet' options={{ headerShown: false }} component={TransferFundForm} />
       </Stack.Navigator>
     </NavigationContainer>
   )

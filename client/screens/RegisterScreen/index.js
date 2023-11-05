@@ -139,7 +139,7 @@ const RegisterScreen = ({ navigation: { navigate } }) => {
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                onPress={() => navigate("Login")}
+                onPress={() => navigate("ScanningLoader")}
                     style={{
                         padding: Spacing,
                       }}
