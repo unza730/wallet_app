@@ -1,17 +1,22 @@
-import React from 'react'
-import { Dimensions, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { Dimensions, Image, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native'
+import CreateWalletModal from '../Modal/CreateWalletModal';
+import { useNavigation } from '@react-navigation/native';
 const listService = [
     {
       name: 'Wallet',
       icon: require('../../assets/images/ic_wallet.png'),
+      path: 'Wallet',
+    },
+    {
+      name: 'Transaction',
+      icon: require('../../assets/images/ic_history.png'),
+      path: 'transaction',
     },
     {
       name: 'Transfer',
       icon: require('../../assets/images/ic_transfer.png'),
-    },
-    {
-      name: 'Pay',
-      icon: require('../../assets/images/ic_pay.png'),
+      path: 'transfer',
     },
     {
       name: 'Top Up',
@@ -20,17 +25,37 @@ const listService = [
   ];
 
   const renderServiceItem = item => {
+    const [modalVisible, setModalVisible] = useState(false);
+    const navigate = useNavigation(); 
     return (
+      <>
+      <View>
+      <Pressable onPress={() => {
+        console.log(item.name)
+        if(item.name === 'Wallet'){
+          setModalVisible(true)
+        } else if(item.name === 'Transfer'){
+          console.log('transfer')
+          navigate.navigate('transfer')
+        } else if(item.name === 'Transaction'){
+          console.log('transaction')
+          navigate.navigate('transaction')
+        }
+        }}>
       <View key={item.name} style={styles.items}>
         <View style={styles.icon}>
             <Image source={item.icon} />
         </View>
         <Text style={styles.itemText}>{item.name}</Text>
       </View>
+      </Pressable>
+      </View>
+      <CreateWalletModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+      </>
     )
   }
-
-const ListService = () => {
+  
+  const ListService = () => {
   return (
     <View>
         <Text style={styles.title}>Service</Text>
