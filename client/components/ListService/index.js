@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Dimensions, Image, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native'
-import CreateWalletModal from '../Modal/CreateWalletModal';
+import CreateWalletModal from '../WalletModal/CreateWalletModal';
 import { useNavigation } from '@react-navigation/native';
 const listService = [
     {

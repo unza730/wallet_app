@@ -8,7 +8,7 @@ import { TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { loginUser } from '../../redux/actions/authActions';
-import NotificationModal from '../../components/Modal/NotificationModal';
+import NotificationModal from '../../components/WalletModal/NotificationModal';
 
 const LoginScreen = ({ navigation: { navigate }, error, loginUser, userList }) => {
   const [email, setEmail] = useState('');
