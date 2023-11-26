@@ -6,6 +6,7 @@ const gray = "#ECECEC";
 const lightBlue = "#f1f4ff";
 const lightgrey = "#E5E4E2";
 const balck2 ='#000000'
+const error = '#FF0000'
 export default {
   darkText: dark,
   text: black,
@@ -19,4 +20,5 @@ export default {
 
   // lightPrimary: lightBlue,
   gray: gray,
+  error: error
 };

@@ -1,280 +1,158 @@
-import React, { useState } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import Spacing from '../../constants/Spacing';
-import FontSize from '../../constants/FontSize';
-import Colors from '../../constants/Colors';
-import Font from '../../constants/Font';
-import { TextInput } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import { loginUser } from '../../redux/actions/authActions';
-import NotificationModal from '../../components/Modal/NotificationModal';
+import React from 'react'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import Spacing from '../../constants/Spacing'
+import FontSize from '../../constants/FontSize'
+import Colors from '../../constants/Colors'
+import Font from '../../constants/Font'
+import { TextInput } from 'react-native'
+import { customStyles } from '../../styles/style'
+import axios from 'axios'
 
-const LoginScreen = ({ navigation: { navigate }, error, loginUser, userList }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [notificationVisible, setNotificationVisible] = useState(false);
-  const [notificationMessage, setNotificationMessage] = useState('');
+const LoginScreen = ({ navigation: { navigate } }) => {
+    const [value, setValue] = React.useState({
+        email: '',
+        password: ''
+    })
+    const [error, setError] = React.useState({
+        email: '',
+        password: ''
+    })
 
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validatePassword = (password) => {
-    return password.length >= 6;
-  };
-
-  const handleLogin = async () => {
-    setEmailError('');
-    setPasswordError('');
-
-    if (!validateEmail(email)) {
-      setEmailError('Invalid email format');
-      return;
-    }
-
-    if (!validatePassword(password)) {
-      setPasswordError('Password must be at least 6 characters long');
-      return;
-    }
-
-    const user = userList?.user;
-
-    if (user && user.email === email) {
-      if (user.password === password) {
-        try {
-          await loginUser(email, password);
-          navigate('Home');
-        } catch (error) {
-          setNotificationMessage(error);
-          setNotificationVisible(true);
+    const handleChanges = (name, text) => {
+        if (name === 'email') {
+            if (text === '') {
+                setError({ ...error, email: 'Email is required' })
+            } else {
+                setError({ ...error, email: '' })
+            }
+        } else if (name === 'password') {
+            if (text === '') {
+                setError({ ...error, password: 'Password is required' })
+            } else if (text.length < 8) {
+                setError({ ...error, password: 'Password must be 8 characters long' })
+            } else {
+                setError({ ...error, password: '' })
+            }
         }
-      } else {
-        // Show a modal with "Invalid credentials" message
-        setNotificationMessage('Invalid credentials');
-        setNotificationVisible(true);
-      }
-    } else {
-      // Show a modal if the user is not found
-      setNotificationMessage("You're not registered. Please sign up.");
-      setNotificationVisible(true);
+        setValue({ ...value, [name]: text })
     }
-  };
 
-  const closeNotificationModal = () => {
-    setNotificationVisible(false);
-  };
+    const handleLogin = async () => {
+        if (value.email === '' || value.password === '') {
+            setError({ ...error, email: 'Email is required', password: 'Password is required' })
+            return
+        } else if (value.password.length < 8) {
+            setError({ ...error, password: 'Password must be 8 characters long' })
+            return
+        }
+        await axios.post('http://localhost:3005/api/auth/login', value, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
+        navigate("Home")
+    }
 
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <View
-        style={{
-          padding: Spacing * 2,
-          marginTop: Spacing * 6
-        }}
-      >
-        <Text
-          style={{
-            fontSize: FontSize.xLarge,
-            color: Colors.primary,
-            fontFamily: Font['poppins-bold'],
-            marginVertical: Spacing * 3,
-          }}
-        >
-          Login Here
-        </Text>
-        <TextInput
-          placeholder="Email"
-          placeholderTextColor={Colors.text}
-          style={{
-            fontFamily: Font['poppins-regular'],
-            fontSize: FontSize.small,
-            backgroundColor: Colors.lightPrimary,
-            color: Colors.text,
-            padding: Spacing * 2,
-            borderRadius: Spacing,
-            marginVertical: Spacing,
-          }}
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-        />
-        <TextInput
-          placeholder="Password"
-          placeholderTextColor={Colors.darkText}
-          secureTextEntry
-          style={{
-            fontFamily: Font['poppins-regular'],
-            fontSize: FontSize.small,
-            backgroundColor: Colors.lightPrimary,
-            color: Colors.text,
-            padding: Spacing * 2,
-            borderRadius: Spacing,
-            marginVertical: Spacing,
-          }}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-        />
-
-        {emailError ? (
-          <Text
-            style={{
-              fontFamily: Font['poppins-semiBold'],
-              fontSize: FontSize.small,
-              color: 'red',
-              textAlign: 'center',
-              marginBottom: Spacing,
-            }}
-          >
-            {emailError}
-          </Text>
-        ) : null}
-
-        {passwordError ? (
-          <Text
-            style={{
-              fontFamily: Font['poppins-semiBold'],
-              fontSize: FontSize.small,
-              color: 'red',
-              textAlign: 'center',
-              marginBottom: Spacing,
-            }}
-          >
-            {passwordError}
-          </Text>
-        ) : null}
-
-        {error ? (
-          <Text
-            style={{
-              fontFamily: Font['poppins-semiBold'],
-              fontSize: FontSize.small,
-              color: 'red',
-              textAlign: 'center',
-              marginBottom: Spacing,
-            }}
-          >
-            {error}
-          </Text>
-        ) : null}
-
-        <TouchableOpacity
-          onPress={handleLogin}
-          style={{
-            padding: Spacing * 2,
-            backgroundColor: Colors.primary,
-            marginVertical: Spacing * 2,
-            borderRadius: Spacing,
-            shadowColor: Colors.primary,
-            shadowOffset: {
-              width: 0,
-              height: Spacing,
-            },
-            shadowOpacity: 0.3,
-            shadowRadius: Spacing,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: Font['poppins-bold'],
-              color: Colors.onPrimary,
-              textAlign: 'center',
-              fontSize: FontSize.large,
-            }}
-          >
-            Sign in
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigate('Register')}
-          style={{
-            padding: Spacing,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: Font['poppins-bold'],
-              color: Colors.text,
-              textAlign: 'center',
-              fontSize: FontSize.small,
-            }}
-          >
-            Create a new account
-          </Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            marginVertical: Spacing * 3,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: Font['poppins-bold'],
-              color: Colors.primary,
-              textAlign: 'center',
-              fontSize: FontSize.small,
-            }}
-          >
-            or Continue with
-          </Text>
-          <View
-            style={{
-              marginTop: Spacing,
-              flexDirection: 'row',
-              justifyContent: 'center',
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                padding: Spacing,
-                backgroundColor: Colors.gray,
-                borderRadius: Spacing / 2,
-                marginHorizontal: Spacing,
-              }}
+    return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <View
+                style={{
+                    padding: Spacing * 2,
+                    flex: 1,
+                }}
             >
-              <Ionicons name="logo-google" color={Colors.text} size={Spacing * 2.2} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: Spacing,
-                backgroundColor: Colors.gray,
-                borderRadius: Spacing / 2,
-                marginHorizontal: Spacing,
-              }}
-            >
-              <Ionicons name="logo-apple" color={Colors.text} size={Spacing * 2.2} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: Spacing,
-                backgroundColor: Colors.gray,
-                borderRadius: Spacing / 2,
-                marginHorizontal: Spacing,
-              }}
-            >
-              <Ionicons name="logo-facebook" color={Colors.text} size={Spacing * 2.2} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-      {/* Render the NotificationModal */}
-      <NotificationModal
-        visible={notificationVisible}
-        message={notificationMessage}
-        onClose={closeNotificationModal}
-      />
-    </SafeAreaView>
-  );
-};
+                <View
+                    style={{
+                        alignItems: 'center',
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontSize: FontSize.xLarge,
+                            color: Colors.primary,
+                            fontFamily: Font['poppins-bold'],
+                            marginTop: Spacing * 4,
+                        }}
+                    >
+                        Login
+                    </Text>
+                    <Text style={{
+                        fontFamily: Font['poppins-semiBold'],
+                        fontSize: FontSize.small,
+                        maxWidth: "80%",
+                        textAlign: "center",
 
-const mapStateToProps = (state) => ({
-  error: state.auth.error,
-  userList: state.auth, 
-});
+                    }}
+                    >Welcome back you've been missed!</Text>
+                </View>
+                <View
+                    style={{
+                        marginVertical: Spacing * 4,
 
-const mapDispatchToProps = {
-  loginUser,
-};
+                    }}>
+                    <TextInput
+                        placeholder='Email'
+                        placeholderTextColor={Colors.darkText}
+                        style={customStyles.textField}
+                        value={value.email}
+                        keyboardType='email-address'
+                        onChangeText={(text) => handleChanges('email', text)}
+                    />
+                    <Text style={customStyles.errorText}>{error.email}</Text>
+                    <TextInput
+                        placeholder='Password'
+                        placeholderTextColor={Colors.darkText}
+                        secureTextEntry
+                        style={customStyles.textField}
+                        value={value.password}
+                        onChangeText={(text) => handleChanges('password', text)}
+                        keyboardType='password'
+                    />
+                    <Text style={customStyles.errorText}>{error.password}</Text>
+                    <View>
+                        <Text
+                            style={{
+                                fontFamily: Font['poppins-semiBold'],
+                                fontSize: FontSize.small,
+                                color: Colors.primary,
+                                alignSelf: 'flex-end'
+                            }}
+                        >Forgot your password ?</Text>
+                    </View>
+                </View>
+                <TouchableOpacity
+                    onPress={handleLogin}
+                    style={customStyles.btnContainer}
+                >
+                    <Text
+                        style={customStyles.btnText}
+                    >
+                        Sign in
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{
+                        padding: Spacing,
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontFamily: Font['poppins-bold'],
+                            color: Colors.text,
+                            textAlign: 'center',
+                            fontSize: FontSize.small
+                        }}
+                    >
+                        Create new account <Text style={{ color: "gray" }} onPress={() => navigate("Register")}>Sign up</Text>
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
+    )
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default LoginScreen

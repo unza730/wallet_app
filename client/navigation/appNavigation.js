@@ -27,6 +27,9 @@ import BusinessDetails from '../screens/Wallet/BusinessWallet/BusinessDetails';
 import TransactionList from '../screens/Transaction/TransactionList';
 import TransferFundForm from '../screens/Transfer/TranferFundForm';
 import TransferSelect from '../screens/Transfer/TransferSelect';
+import CreateWallet from '../screens/Wallet/CreateWallet';
+import Wallet from '../screens/Wallet';
+import UploadImage from '../screens/Wallet/UploadImage';
 // import {
 //     HomeOutline,
 //     HeartOutline,
@@ -56,7 +59,6 @@ export default function AppNavigation() {
         {/* <Stack.Screen name='Home' options={{headerShown: false}} component={HomeScreen} /> */}
         <Stack.Screen name='Login' options={{ headerShown: false }} component={LoginScreen} />
         <Stack.Screen name='Register' options={{ headerShown: false }} component={RegisterScreen} />
-        <Stack.Screen name='OTP' options={{ headerShown: false }} component={OtpScreen} />
         <Stack.Screen name='Success' options={{ headerShown: false }} component={SuccessScreen} />
         <Stack.Screen name='ScanningLoader' options={{ headerShown: false }} component={ScanningScreen} />
         <Stack.Screen name='personal-wallet' options={{ headerShown: false }} component={PersonalWallet} />
@@ -69,6 +71,12 @@ export default function AppNavigation() {
         <Stack.Screen name='transfer' options={{ headerShown: false }} component={TransferSelect} />
         <Stack.Screen name='transfer-bank' options={{ headerShown: false }} component={TransferFundForm} />
         <Stack.Screen name='transfer-wallet' options={{ headerShown: false }} component={TransferFundForm} />
+        <Stack.Screen name='Verify-phone' options={{ headerShown: false }} component={PhoneNumberValidation} />
+        <Stack.Screen name='Verify-OTP' options={{ headerShown: false }} component={OtpScreen} />
+        <Stack.Screen name='create-batch' options={{ headerShown: false }} component={BatchCreationScreen} />
+        <Stack.Screen name='Wallet' options={{ headerShown: false }} component={Wallet} />
+        <Stack.Screen name='create-wallet' options={{ headerShown: false }} component={CreateWallet} />
+        <Stack.Screen name='upload-image' options={{ headerShown: false }} component={UploadImage} />
       </Stack.Navigator>
     </NavigationContainer>
   )

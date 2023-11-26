@@ -1,13 +1,42 @@
 import React from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, StyleSheet, TextInput } from 'react-native'
-import Spacing from '../../constants/Spacing'
-import FontSize from '../../constants/FontSize'
-import Colors from '../../constants/Colors'
-import Font from '../../constants/Font'
+import Spacing from '../constants/Spacing'
+import FontSize from '../constants/FontSize'
+import Colors from '../constants/Colors'
+import Font from '../constants/Font'
+import axios from 'axios'
+import { customStyles } from '../styles/style'
 
-const OtpScreen = () => {
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+const OtpScreen = ({ navigation: { navigate } }) => {
+    const boxArray = new Array(4).fill(0);
+    const [code, setCode] = React.useState(Array(4).fill(''));
+    const textInputsRefs = boxArray.map(() => React.createRef());
+
+    const focusNextInput = (index) => {
+        if (index < boxArray.length - 1) {
+            textInputsRefs[index + 1].current.focus();
+        } else {
+            // Last input field reached
+            // You can trigger the verification here or perform any other action
+        }
+    };
+
+    const handleVerifyOTP = async () => {
+        const otpCode = code.join("")
+        console.log(otpCode);
+        // await axios.post('http://localhost:3005/api/auth/verify-otp', {
+        //     "phone_number": "1234567890",
+        //     "otp": "1234"
+        // }).then((response) => {
+        //     console.log(response);
+        // }).catch((error) => {
+        //     console.log(error);
+        // })
+        // await AsyncStorage.setItem('is_verified', 'true')
+        navigate("Home")
+    }
+    return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <View
                 style={{
                     padding: Spacing * 2,
@@ -25,67 +54,72 @@ const OtpScreen = () => {
                 </View>
                 <View
                     style={{
-                        marginVertical: Spacing * 3,
+                        marginTop: Spacing * 3,
+                        marginBottom: Spacing,
                         flexDirection: 'row',
+                        justifyContent: 'center'
                     }}
                 >
-                
-                    <TextInput 
-                    keyboardType='numeric'
-                    maxLength={1}
-                    style={styles.circleInput}/>
-                    <TextInput 
-                    keyboardType='numeric'
-                    maxLength={1}
-                    style={styles.circleInput}/>
-                    <TextInput 
-                    keyboardType='numeric'
-                    maxLength={1}
-                    style={styles.circleInput}/>
-                    <TextInput 
-                    keyboardType='numeric'
-                    maxLength={1}
-                    style={styles.circleInput}/>
-                    <TextInput 
-                    keyboardType='numeric'
-                    maxLength={1}
-                    style={styles.circleInput}/>
-                    <TextInput 
-                    keyboardType='numeric'
-                    maxLength={1}
-                    style={styles.circleInput}/>
-                 
+                    {boxArray.map((data, index) => {
+                        return (
+                            <View
+                                key={index}
+                                style={{
+                                    marginHorizontal: Spacing / 2,
+                                    height: 50,
+                                    width: 50,
+                                    borderRadius: 75,
+                                    borderWidth: 1,
+                                    borderColor: 'black',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <TextInput
+                                    ref={textInputsRefs[index]}
+                                    style={{
+                                        textAlign: 'center',
+                                        fontSize: 16
+                                    }}
+                                    keyboardType='numeric'
+                                    maxLength={1}
+                                    onChangeText={(text) => {
+                                        let tempCode = [...code];
+                                        tempCode[index] = text;
+                                        setCode(tempCode);
+                                        if (text !== '') {
+                                            focusNextInput(index);
+                                        }
+                                    }}
+                                    value={code[index]}
+                                />
+                            </View>
+                        )
+                    })}
                 </View>
+                <Text style={customStyles.smallText}>Please request a new OTP if you don't receive it in <Text style={{ color: '#6699CC' }}>00:05</Text></Text>
                 <TouchableOpacity
-                 onPress={() => navigate("Home")}
-                    style={styles.button}
-                >
-                    <Text
-                        style={{
-                            fontFamily: Font['poppins-bold'],
-                            color: Colors.onPrimary,
-                            textAlign: 'center',
-                            fontSize: FontSize.large
-                        }}
-                    >
-                        Verify
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                onPress={() => navigate("Login")}
-                    style={{
-                        padding: Spacing,
-                      }}
+                    onPress={() => navigate("Login")}
                 >
                     <Text
                         style={styles.footerText}
                     >
-                    RESEND OTP
+                        RESEND OTP
+                    </Text>
+                </TouchableOpacity>
+            </View>
+            <View style={customStyles.bottomButtonWrapper}>
+                <TouchableOpacity
+                    onPress={handleVerifyOTP}
+                    style={customStyles.btnContainer}
+                >
+                    <Text style={customStyles.btnText}>
+                        Verify
                     </Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
-  )
+    )
 }
 
 export default OtpScreen
@@ -140,5 +174,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         marginHorizontal: 5
-      },
+    },
 });
