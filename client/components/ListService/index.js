@@ -1,65 +1,28 @@
-import React, { useState } from 'react'
-import { Dimensions, Image, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native'
-import CreateWalletModal from '../WalletModal/CreateWalletModal';
-import { useNavigation } from '@react-navigation/native';
-const listService = [
-    {
-      name: 'Wallet',
-      icon: require('../../assets/images/ic_wallet.png'),
-      path: 'Wallet',
-    },
-    {
-      name: 'Transaction',
-      icon: require('../../assets/images/ic_history.png'),
-      path: 'transaction',
-    },
-    {
-      name: 'Transfer',
-      icon: require('../../assets/images/ic_transfer.png'),
-      path: 'transfer',
-    },
-    {
-      name: 'Top Up',
-      icon: require('../../assets/images/ic_topup.png'),
-    },
-  ];
+import { useNavigation } from '@react-navigation/native'
+import React from 'react'
+import { TouchableOpacity } from 'react-native'
+import { Dimensions, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
+
 
   const renderServiceItem = item => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const navigate = useNavigation(); 
+    const navigate = useNavigation().navigate
     return (
-      <>
-      <View>
-      <Pressable onPress={() => {
-        console.log(item.name)
-        if(item.name === 'Wallet'){
-          setModalVisible(true)
-        } else if(item.name === 'Transfer'){
-          console.log('transfer')
-          navigate.navigate('transfer')
-        } else if(item.name === 'Transaction'){
-          console.log('transaction')
-          navigate.navigate('transaction')
-        }
-        }}>
+      <TouchableOpacity key={item.name} style={styles.items} onPress={() => navigate(item.onPress)}>
       <View key={item.name} style={styles.items}>
         <View style={styles.icon}>
             <Image source={item.icon} />
         </View>
         <Text style={styles.itemText}>{item.name}</Text>
       </View>
-      </Pressable>
-      </View>
-      <CreateWalletModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
-      </>
+      </TouchableOpacity>
     )
   }
-  
-  const ListService = () => {
+
+const ListService = ({listService}) => {
   return (
     <View>
         <Text style={styles.title}>Service</Text>
-        <View style={styles.list}>{listService.map(renderServiceItem)}</View>
+        <View style={styles.list}>{listService?.map(renderServiceItem)}</View>
     </View>
   )
 }

@@ -31,7 +31,8 @@
     "redux": "^4.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "redux-thunk": "^2.4.2"
   },
   "private": true
 }
