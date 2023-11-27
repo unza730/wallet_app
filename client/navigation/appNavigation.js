@@ -30,6 +30,10 @@ import TransferSelect from '../screens/Transfer/TransferSelect';
 import CreateWallet from '../screens/Wallet/CreateWallet';
 import Wallet from '../screens/Wallet';
 import UploadImage from '../screens/Wallet/UploadImage';
+import BankList from '../screens/Banks/BankList';
+import AddFunds from '../screens/Banks/AddFunds';
+import PhoneNumberValidation from '../screens/RegisterScreen/phoneNumberValidation';
+import BatchCreationScreen from '../screens/Batch/CreateBatch';
 // import {
 //     HomeOutline,
 //     HeartOutline,
@@ -77,17 +81,12 @@ export default function AppNavigation() {
         <Stack.Screen name='Wallet' options={{ headerShown: false }} component={Wallet} />
         <Stack.Screen name='create-wallet' options={{ headerShown: false }} component={CreateWallet} />
         <Stack.Screen name='upload-image' options={{ headerShown: false }} component={UploadImage} />
+        <Stack.Screen name='bankList' options={{ headerShown: false }} component={BankList} />
+        <Stack.Screen name='AddFunds' options={{ headerShown: false }} component={AddFunds} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
-// function HomeScreen() {
-//   return (
-//     <View style={styles.screenContainer}>
-//       <Text>Home Screen</Text>
-//     </View>
-//   );
-// }
 
 function ProfileScreen() {
   return (

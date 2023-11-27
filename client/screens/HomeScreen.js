@@ -4,8 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Card from '../components/Card'
 import ListService from '../components/ListService'
 import RecentTransaction from '../components/RecentTransaction'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { businessWalletListService, personalWalletListService } from '../constants/constants'
 
 const HomeScreen = () => {
+  const walletType = AsyncStorage.getItem('walletType')
+  const user = AsyncStorage.getItem('user')
+  console.log(user,"<--")
   return (
    <SafeAreaView style={{flex: 1}}>
     
@@ -20,8 +25,17 @@ const HomeScreen = () => {
       <View style={styles.card}>
         <Card />
       </View>
-      <ListService />
+      {/* {walletType === 'personal' ?  */}
+      <View style={styles.card}>
+      <ListService listService={personalWalletListService}/>
       <RecentTransaction />
+      </View>
+       {/* :
+       <View style={styles.card}>
+        <ListService listService={businessWalletListService}/>
+         <RecentTransaction /> 
+      </View>
+    }  */}
     </ScrollView>
    </SafeAreaView>
   )

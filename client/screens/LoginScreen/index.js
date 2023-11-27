@@ -7,6 +7,7 @@ import Font from '../../constants/Font'
 import { TextInput } from 'react-native'
 import { customStyles } from '../../styles/style'
 import axios from 'axios'
+import { login } from '../../axiosApi/apiCall'
 
 const LoginScreen = ({ navigation: { navigate } }) => {
     const [value, setValue] = React.useState({
@@ -45,16 +46,13 @@ const LoginScreen = ({ navigation: { navigate } }) => {
             setError({ ...error, password: 'Password must be 8 characters long' })
             return
         }
-        await axios.post('http://localhost:3005/api/auth/login', value, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            console.log(response);
-        }).catch((error) => {
-            console.log(error);
+        login(value, (response) => {
+            console.log(response)
+            navigate("Home")
+        }, (error) => {
+            console.log(error)
         })
-        navigate("Home")
+        // navigate("Home")
     }
 
     return (
