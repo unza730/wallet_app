@@ -104,6 +104,6 @@ const PhoneNumberValidation = ({ navigation: { navigate } }) => {
     )
 }
 
-export default PhoneNumberValidation
+export default PhoneNumberValidation;
 
-const styles = StyleSheet.create({})
+// const styles = StyleSheet.create({})
