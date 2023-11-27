@@ -1,16 +1,14 @@
 import React, { useState, useRef } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import Spacing from '../../constants/Spacing'
 import FontSize from '../../constants/FontSize'
 import Colors from '../../constants/Colors'
 import Font from '../../constants/Font'
 import { TextInput } from 'react-native'
-import CustomTextInput from '../../components/CustomTextInput'
-
-import { customStyles } from '../../styles/style'
-import axios from 'axios'
+import { ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { signup } from '../../axiosApi/apiCall'
+import { customStyles } from '../../styles/style'
 
 const RegisterScreen = ({ navigation: { navigate } }) => {
     const [value, setValue] = useState({
@@ -20,6 +18,7 @@ const RegisterScreen = ({ navigation: { navigate } }) => {
         paypocket_id: '',
         password: ''
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChanges = (name, text) => {
         setValue({ ...value, [name]: text })
@@ -29,8 +28,12 @@ const RegisterScreen = ({ navigation: { navigate } }) => {
         if (value.name === '' || value.email_address === '' || value.cnic === '' || value.paypocket_id === '' || value.password === '') {
             alert('Please fill all fields')
         } else {
+            setLoading(true)
             await signup(value, (res) => {
                 console.log(res, "res");
+                setLoading(false)
+                AsyncStorage.setItem('token', res.data.token)
+                AsyncStorage.setItem('user', JSON.stringify(res.data.user))
                 navigate("Verify-phone")
             }, (err) => {
                 console.log(err, "err");
@@ -71,6 +74,7 @@ const RegisterScreen = ({ navigation: { navigate } }) => {
                         }}
                     >Create an account to  Unlock wallet features!</Text>
                 </View>
+                <ScrollView>
                 <View
                     style={{
                         marginVertical: Spacing,
@@ -118,12 +122,14 @@ const RegisterScreen = ({ navigation: { navigate } }) => {
                 <TouchableOpacity
                     onPress={handleRegister}
                     style={customStyles.btnContainer}
-                >
-                    <Text
-                        style={customStyles.btnText}
-                    >
-                        Create account
-                    </Text>
+                >{
+                        loading ? <ActivityIndicator size="small" color="white" /> :
+
+                            <Text
+                                style={customStyles.btnText}
+                            >
+                                Create account
+                            </Text>}
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{
@@ -141,6 +147,7 @@ const RegisterScreen = ({ navigation: { navigate } }) => {
                         Already have an account <Text style={{ color: "gray" }} onPress={() => navigate("Login")}>Sign in</Text>
                     </Text>
                 </TouchableOpacity>
+                </ScrollView>
             </View>
         </SafeAreaView>
     )

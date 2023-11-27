@@ -8,9 +8,12 @@ import FontSize from '../../constants/FontSize'
 import Colors from '../../constants/Colors'
 import Font from '../../constants/Font'
 import { bank } from '../../utils/bankList'
+import { TextInput } from 'react-native'
+import { FlatList } from 'react-native'
+import { AntDesign } from '@expo/vector-icons';
 
 
-const BankList = () => {
+const BankList = ({navigation: { navigate }}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredBanks, setFilteredBanks] = useState(bank.list);
 
@@ -29,10 +32,10 @@ const BankList = () => {
     };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-            <ScrollView>
+    
                 <View
                     style={{
-                        padding: Spacing * 2,
+                        // padding: Spacing * 2,
                         flex: 1,
                     }}
                 >
@@ -62,23 +65,23 @@ const BankList = () => {
                             value={searchTerm}
                             onChangeText={handleSearch}
                         />
-                        <ScrollView>
+                        <ScrollView style={{ marginBottom: 30}}>
                         <FlatList
                             data={filteredBanks}
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={({ item }) => (
                                 <TouchableOpacity
-                                    style={customStyles.bankCard}
+                                    style={customStyles.listItem}
                                     onPress={() => handleBank(item)}
                                 >
                                     <Text style={customStyles.bankCardText}>{item.bank}</Text>
+                                    <AntDesign name="right" size={24} color="black" />
                                 </TouchableOpacity>
                             )}
                         />
                         </ScrollView>
                     </View>
                 </View>
-            </ScrollView>
         </SafeAreaView >
     )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Card from '../components/Card'
@@ -9,8 +9,17 @@ import { businessWalletListService, personalWalletListService } from '../constan
 
 const HomeScreen = () => {
   const walletType = AsyncStorage.getItem('walletType')
-  const user = AsyncStorage.getItem('user')
-  console.log(user,"<--")
+  let user = ''
+  useEffect( async () => {
+
+      user = await AsyncStorage.getItem('user');
+     if (user) {
+       const userData = JSON.parse(user);
+        console.log(userData, "userData")
+       // Use userData as needed in your application
+     }
+    
+  }, []);
   return (
    <SafeAreaView style={{flex: 1}}>
     
@@ -18,7 +27,7 @@ const HomeScreen = () => {
       <View style={styles.header}> 
         <View>
           <Text>Hello</Text>
-          <Text style={styles.userName}>My Name</Text>
+          <Text style={styles.userName}>My {user.name}</Text>
         </View>
         <Image  source={require('../assets/images/ic_notif.png')} />
       </View>

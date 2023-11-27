@@ -15,11 +15,10 @@ const PayMethodList = [
         name: 'Bank Account',
     },
     {
-        name: 'E-Wallet',
+        name: 'PayPocket Wallet',
     },
 ]
-const TransferSelect = () => {
-    const navigation = useNavigation()
+const TransferSelect = ({navigation: {navigate}}) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
             <View
@@ -62,7 +61,7 @@ const TransferSelect = () => {
 
                         <TouchableOpacity
                         style={{
-                            borderRadius: Spacing / 2,
+                            borderRadius: 2,
                             backgroundColor: Colors.lightPrimary,
                             color: 'white',
                             padding: Spacing * 1.5,
@@ -72,13 +71,14 @@ const TransferSelect = () => {
                             fontSize: FontSize.small,
                             display: 'flex',
                             flexDirection: 'row',
+                            alignItems: 'center',
                             justifyContent: 'space-between',
                         }}
                         onPress={() => {
                             if(item.name === 'Bank Account'){
-                                navigation.navigate('transfer-bank')
+                                navigate('transfer-bank')
                             }else{ 
-                                navigation.navigate('transfer-ewallet')
+                                navigate('transfer-ewallet')
                             }
                         }}
                         >

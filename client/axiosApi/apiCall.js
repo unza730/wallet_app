@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { getTokens } from './../utils/helperFunctions';
 
-const BASE_URL = 'http://192.168.1.125/api'
-// const BASE_URL = 'https://wallet-backend-lovat.vercel.app/api'
+// const BASE_URL = 'http://192.168.1.108/api'
+const BASE_URL = 'https://wallet-backend-lovat.vercel.app/api'
 const config = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getTokens()}` } }
 
 axios.defaults.timeout = 3000000
@@ -65,6 +65,15 @@ export const createWallet = async (data, resCallback, errorCallback) => {
 export const transferFund = async (data, resCallback, errorCallback) => {
     try {
         const res = await axios.post(`${BASE_URL}/bank/transfer-fund`, data, config)
+        resCallback(res)
+    } catch (error) {
+        errorCallback(error)
+    }
+}
+
+export const resetPassword = async (data, resCallback, errorCallback) => {
+    try {
+        const res = await axios.post(`${BASE_URL}/auth/reset-password`, data, config)
         resCallback(res)
     } catch (error) {
         errorCallback(error)

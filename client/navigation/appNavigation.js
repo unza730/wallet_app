@@ -34,6 +34,9 @@ import BankList from '../screens/Banks/BankList';
 import AddFunds from '../screens/Banks/AddFunds';
 import PhoneNumberValidation from '../screens/RegisterScreen/phoneNumberValidation';
 import BatchCreationScreen from '../screens/Batch/CreateBatch';
+import TransferFundToWalletForm from '../screens/Transfer/TransferFundToWalletForm';
+import ResetPassword from '../screens/forgotPassword/ResetPassword';
+import ForgotPassword from '../screens/forgotPassword/ForgotPassword';
 // import {
 //     HomeOutline,
 //     HeartOutline,
@@ -72,9 +75,9 @@ export default function AppNavigation() {
         <Stack.Screen name='business-wallet-business-details' options={{ headerShown: false }} component={BusinessDetails} />
         <Stack.Screen name='business-wallet-contact' options={{ headerShown: false }} component={ContactDetails} />
         <Stack.Screen name='transaction' options={{ headerShown: false }} component={TransactionList} />
-        <Stack.Screen name='transfer' options={{ headerShown: false }} component={TransferSelect} />
+        <Stack.Screen name='Transfer' options={{ headerShown: false }} component={TransferSelect} />
         <Stack.Screen name='transfer-bank' options={{ headerShown: false }} component={TransferFundForm} />
-        <Stack.Screen name='transfer-wallet' options={{ headerShown: false }} component={TransferFundForm} />
+        <Stack.Screen name='transfer-wallet' options={{ headerShown: false }} component={TransferFundToWalletForm} />
         <Stack.Screen name='Verify-phone' options={{ headerShown: false }} component={PhoneNumberValidation} />
         <Stack.Screen name='Verify-OTP' options={{ headerShown: false }} component={OtpScreen} />
         <Stack.Screen name='create-batch' options={{ headerShown: false }} component={BatchCreationScreen} />
@@ -83,7 +86,9 @@ export default function AppNavigation() {
         <Stack.Screen name='upload-image' options={{ headerShown: false }} component={UploadImage} />
         <Stack.Screen name='bankList' options={{ headerShown: false }} component={BankList} />
         <Stack.Screen name='AddFunds' options={{ headerShown: false }} component={AddFunds} />
-      </Stack.Navigator>
+        <Stack.Screen name='resetPassword' options={{ headerShown: false }} component={ResetPassword} />
+        <Stack.Screen name='forgotPassword' options={{ headerShown: false }} component={ForgotPassword} />
+       </Stack.Navigator>
     </NavigationContainer>
   )
 }

@@ -6,57 +6,44 @@ import Colors from '../../constants/Colors'
 import Font from '../../constants/Font'
 import { TextInput } from 'react-native'
 import { customStyles } from '../../styles/style'
-import axios from 'axios'
-import { login } from '../../axiosApi/apiCall'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { resetPassword } from '../../axiosApi/apiCall'
 
-const LoginScreen = ({ navigation: { navigate } }) => {
+const ResetPassword = ({ navigation: { navigate } }) => {
     const [value, setValue] = React.useState({
-        email: '',
-        password: ''
+        password: '',
+        otp: ''
     })
     const [error, setError] = React.useState({
-        email: '',
-        password: ''
+        password: '',
+        otp: ''
     })
 
     const handleChanges = (name, text) => {
-        if (name === 'email') {
-            if (text === '') {
-                setError({ ...error, email: 'Email is required' })
-            } else {
-                setError({ ...error, email: '' })
-            }
-        } else if (name === 'password') {
+        if (name === 'password') {
             if (text === '') {
                 setError({ ...error, password: 'Password is required' })
-            } else if (text.length < 8) {
-                setError({ ...error, password: 'Password must be 8 characters long' })
-            } else {
-                setError({ ...error, password: '' })
+            }
+        } else if (name === 'otp') {
+            if (text === '') {
+                setError({ ...error, otp: 'OTP is required' })
             }
         }
         setValue({ ...value, [name]: text })
     }
 
-    const handleLogin = async () => {
-        if (value.email === '' || value.password === '') {
-            setError({ ...error, email: 'Email is required', password: 'Password is required' })
+    const handleReset = async () => {
+        if (value.otp === '' || value.password === '') {
+            setError({ ...error, otp: 'OTP is required', password: 'Password is required' })
             return
         } else if (value.password.length < 8) {
             setError({ ...error, password: 'Password must be 8 characters long' })
             return
         }
-        login(value, (response) => {
-            console.log(response, "<=====")
-            console.log(response.data)
-            AsyncStorage.setItem('token', response.data.token)
-            AsyncStorage.setItem('user', JSON.stringify(response.data.user))
-            navigate("Home")
+        resetPassword(value, (response) => {
+            navigate('Login')
         }, (error) => {
             console.log(error)
         })
-        // navigate("Home")
     }
 
     return (
@@ -80,7 +67,7 @@ const LoginScreen = ({ navigation: { navigate } }) => {
                             marginTop: Spacing * 4,
                         }}
                     >
-                        Login
+                        Reset Password
                     </Text>
                     <Text style={{
                         fontFamily: Font['poppins-semiBold'],
@@ -97,14 +84,13 @@ const LoginScreen = ({ navigation: { navigate } }) => {
 
                     }}>
                     <TextInput
-                        placeholder='Email'
+                        placeholder='OTP Code'
                         placeholderTextColor={Colors.darkText}
                         style={customStyles.textField}
-                        value={value.email}
-                        keyboardType='email-address'
-                        onChangeText={(text) => handleChanges('email', text)}
+                        value={value.otp}
+                        onChangeText={(text) => handleChanges('otp', text)}
                     />
-                    <Text style={customStyles.errorText}>{error.email}</Text>
+                    <Text style={customStyles.errorText}>{error.otp}</Text>
                     <TextInput
                         placeholder='Password'
                         placeholderTextColor={Colors.darkText}
@@ -115,41 +101,13 @@ const LoginScreen = ({ navigation: { navigate } }) => {
                         keyboardType='password'
                     />
                     <Text style={customStyles.errorText}>{error.password}</Text>
-                    <TouchableOpacity onPress={() => navigate('forgotPassword')}>
-                        <Text
-                            style={{
-                                fontFamily: Font['poppins-semiBold'],
-                                fontSize: FontSize.small,
-                                color: Colors.primary,
-                                alignSelf: 'flex-end'
-                            }}
-                        >Forgot your password?</Text>
-                    </TouchableOpacity>
                 </View>
                 <TouchableOpacity
-                    onPress={handleLogin}
+                    onPress={handleReset}
                     style={customStyles.btnContainer}
                 >
-                    <Text
-                        style={customStyles.btnText}
-                    >
-                        Sign in
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{
-                        padding: Spacing,
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontFamily: Font['poppins-bold'],
-                            color: Colors.text,
-                            textAlign: 'center',
-                            fontSize: FontSize.small
-                        }}
-                    >
-                        Create new account <Text style={{ color: "gray" }} onPress={() => navigate("Register")}>Sign up</Text>
+                    <Text style={customStyles.btnText}>
+                        Reset Password
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -157,4 +115,4 @@ const LoginScreen = ({ navigation: { navigate } }) => {
     )
 }
 
-export default LoginScreen
+export default ResetPassword

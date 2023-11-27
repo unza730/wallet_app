@@ -1,9 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput } from 'react-native'
 import React from 'react'
-import { TextInput } from 'react-native-paper'
 import { customStyles } from '../../styles/style'
 import { transferFund } from '../../axiosApi/apiCall'
 import { useNavigation } from '@react-navigation/native'
+import Spacing from '../../constants/Spacing'
+import FontSize from '../../constants/FontSize'
+import Colors from '../../constants/Colors'
+import Font from '../../constants/Font'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const AddFunds = ({ route }) => {
     const { selectedBank } = route.params;
@@ -58,6 +62,7 @@ const AddFunds = ({ route }) => {
         }, (err) => {
             console.log(err, "err");
         })
+        navigate("Home")
     }
 
     return (
@@ -87,7 +92,7 @@ const AddFunds = ({ route }) => {
                     </View>
                     <View
                         style={{
-                            marginVertical: Spacing * 4,
+                            marginVertical: Spacing * 2,
                         }}>
                         <TextInput
                             style={customStyles.textField}
@@ -115,10 +120,10 @@ const AddFunds = ({ route }) => {
             </ScrollView>
             <View style={customStyles.bottomButtonWrapper}>
                 <TouchableOpacity
-                    style={customStyles.bottomButton}
+                    style={customStyles.btnContainer}
                     onPress={hnadleTransferFunds}
                 >
-                    <Text style={customStyles.bottomButtonText}>Add Funds</Text>
+                    <Text style={customStyles.btnText}>Add Funds</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
