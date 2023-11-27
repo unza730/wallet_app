@@ -5,7 +5,7 @@ import FontSize from '../../constants/FontSize'
 import Colors from '../../constants/Colors'
 import Font from '../../constants/Font'
 import axios from 'axios'
-import { customStyles } from '../../styles/style'
+import { customStyles } from '../../styles/style';
 
 const OtpScreen = ({ navigation: { navigate } }) => {
     const boxArray = new Array(4).fill(0);

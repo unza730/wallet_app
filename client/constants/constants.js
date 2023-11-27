@@ -16,9 +16,9 @@ export const personalWalletListService = [
       onPress: 'Pay',
     },
     {
-      name: 'Top Up',
+      name: 'Add funds',
       icon: require('../assets/images/ic_topup.png'),
-      onPress: 'TopUp',
+      onPress: 'bankList',
     },
   ];
 

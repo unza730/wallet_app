@@ -8,7 +8,7 @@ import { TextInput } from 'react-native'
 import { customStyles } from '../../styles/style'
 
 
-const TransferFundForm = ({ navigation: { navigate } }) => {
+const TransferFundToWalletForm = ({ navigation: { navigate } }) => {
     const [val, setVal] = React.useState({
         account_number: '',
         amount: '',
@@ -19,7 +19,7 @@ const TransferFundForm = ({ navigation: { navigate } }) => {
         setVal({ ...val, [name]: text })
     }
 
-    const handleBankTransfer = () => {
+    const handleWalletTransfer = () => {
         console.log(val);
         navigate("Home")
     }
@@ -63,7 +63,7 @@ const TransferFundForm = ({ navigation: { navigate } }) => {
                 >
                     <TextInput
                         style={customStyles.textField}
-                        placeholder="IBAN number"
+                        placeholder="PayPocket wallet ID"
                         value={val.account_number}
                         onChangeText={handleChange}
                     />
@@ -80,7 +80,7 @@ const TransferFundForm = ({ navigation: { navigate } }) => {
                         onChangeText={handleChange}
                     />
                     <TouchableOpacity
-                        onPress={handleBankTransfer}
+                        onPress={handleWalletTransfer}
                         style={customStyles.btnContainer}
                     >
                         <Text style={customStyles.btnText}>
@@ -93,4 +93,4 @@ const TransferFundForm = ({ navigation: { navigate } }) => {
     )
 }
 
-export default TransferFundForm
+export default TransferFundToWalletForm

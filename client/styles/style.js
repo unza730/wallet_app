@@ -71,4 +71,29 @@ export const customStyles = StyleSheet.create({
         backgroundColor: 'gray',
         marginVertical: Spacing,
       },
+      listItem: {
+        paddingVertical: Spacing * 2,
+        paddingHorizontal: Spacing * 3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottomColor: Colors.primary,
+        borderBottomWidth: 1,
+        // backgroundColor: Colors.lightPrimary,
+      },
+      searchBar: {
+        backgroundColor: Colors.lightPrimary,
+        paddingHorizontal: Spacing * 2,
+        paddingVertical: Spacing,
+        borderRadius: 5,
+        marginVertical: Spacing,
+        marginHorizontal: Spacing,
+        shadowColor: Colors.primary,
+        shadowOffset: {
+          width: 0,
+          height: Spacing
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: Spacing,
+      },
 })

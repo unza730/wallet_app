@@ -46,8 +46,17 @@ useEffect(() => {
       <View style={styles.card}>
         <Card />
       </View>
-      <ListService />
+      {/* {walletType === 'personal' ?  */}
+      <View style={styles.card}>
+      <ListService listService={personalWalletListService}/>
       <RecentTransaction />
+      </View>
+       {/* :
+       <View style={styles.card}>
+        <ListService listService={businessWalletListService}/>
+         <RecentTransaction /> 
+      </View>
+    }  */}
     </ScrollView>
    </SafeAreaView>
   )

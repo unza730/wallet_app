@@ -95,10 +95,28 @@ export const forgotPassword = async (data, resCallback, errorCallback) => {
 };
 
 export const createWallet = async (data, resCallback, errorCallback) => {
-  try {
-    const res = await axios.post(`${BASE_URL}/wallet/create`, data, config);
-    resCallback(res);
-  } catch (error) {
-    errorCallback(error);
-  }
-};
+    try {
+        const res = await axios.post(`${BASE_URL}/wallet/create`, data, config)
+        resCallback(res)
+    } catch (error) {
+        errorCallback(error)
+    }
+}
+
+export const transferFund = async (data, resCallback, errorCallback) => {
+    try {
+        const res = await axios.post(`${BASE_URL}/bank/transfer-fund`, data, config)
+        resCallback(res)
+    } catch (error) {
+        errorCallback(error)
+    }
+}
+
+export const resetPassword = async (data, resCallback, errorCallback) => {
+    try {
+        const res = await axios.post(`${BASE_URL}/auth/reset-password`, data, config)
+        resCallback(res)
+    } catch (error) {
+        errorCallback(error)
+    }
+}
