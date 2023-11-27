@@ -37,6 +37,7 @@ import BatchCreationScreen from '../screens/Batch/CreateBatch';
 import TransferFundToWalletForm from '../screens/Transfer/TransferFundToWalletForm';
 import ResetPassword from '../screens/forgotPassword/ResetPassword';
 import ForgotPassword from '../screens/forgotPassword/ForgotPassword';
+import RequestWallet from '../screens/RequestWallet';
 // import {
 //     HomeOutline,
 //     HeartOutline,
@@ -88,6 +89,7 @@ export default function AppNavigation() {
         <Stack.Screen name='AddFunds' options={{ headerShown: false }} component={AddFunds} />
         <Stack.Screen name='resetPassword' options={{ headerShown: false }} component={ResetPassword} />
         <Stack.Screen name='forgotPassword' options={{ headerShown: false }} component={ForgotPassword} />
+        <Stack.Screen name='RequestWallet' options={{ headerShown: false }} component={RequestWallet} />
        </Stack.Navigator>
     </NavigationContainer>
   )

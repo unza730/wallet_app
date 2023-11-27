@@ -79,3 +79,52 @@ export const resetPassword = async (data, resCallback, errorCallback) => {
         errorCallback(error)
     }
 }
+
+export const recentTransaction = async (data, resCallback, errorCallback) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/transaction/list`, config)
+        resCallback(res);
+    }
+    catch (error) {
+        console.log(err)
+    }
+}
+
+export const getWalletById = async (data, resCallback, errorCallback) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/wallet/${data.id}`, config)
+        resCallback(res);
+    }
+    catch (error) {
+        console.log(err)
+    }
+}
+
+export const getAllBatches = async (data, resCallback, errorCallback) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/batch/list`, config)
+        resCallback(res);
+    }
+    catch (error) {
+        console.log(err)
+    }
+}
+
+export const getBatchById = async (data, resCallback, errorCallback) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/batch/${data.id}`, config)
+        resCallback(res);
+    }
+    catch (error) {
+        console.log(err)
+    }
+}
+
+export const createBatch = async (data, resCallback, errorCallback) => {
+    try {
+        const res = await axios.post(`${BASE_URL}/batch/create`, data, config)
+        resCallback(res)
+    } catch (error) {
+        errorCallback(error)
+    }
+}
