@@ -4,22 +4,34 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Card from '../components/Card'
 import ListService from '../components/ListService'
 import RecentTransaction from '../components/RecentTransaction'
+import { useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { businessWalletListService, personalWalletListService } from '../constants/constants'
 
 const HomeScreen = () => {
-  const walletType = AsyncStorage.getItem('walletType')
-  let user = ''
-  useEffect( async () => {
+  const authState = useSelector((state) => state.auth);
+// console.log("authState_;;;; ",authState, authState.name);
+console.log("User Name:", authState?.user?.name); // Output: User Name: Hina
+console.log("User Email:", authState?.user?.email_address); // Output: User Email: hina123@gmail.com
+// ... and so on for other user properties
+useEffect(() => {
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('authToken');
+      console.log('token:-->>> ', token);
+    } catch (error) {
+      console.error('Error retrieving token:', error);
+    }
+  };
 
-      user = await AsyncStorage.getItem('user');
-     if (user) {
-       const userData = JSON.parse(user);
-        console.log(userData, "userData")
-       // Use userData as needed in your application
-     }
-    
-  }, []);
+  getToken();
+}, []);
+  // Check if the 'auth' state is available
+  if (!authState) {
+    // Handle the case where 'auth' state is not available (Redux setup issue)
+    console.error("Redux 'auth' state is not available. Check your Redux setup.");
+    return null; // or render an error component
+  }
+
   return (
    <SafeAreaView style={{flex: 1}}>
     
@@ -27,7 +39,7 @@ const HomeScreen = () => {
       <View style={styles.header}> 
         <View>
           <Text>Hello</Text>
-          <Text style={styles.userName}>My {user.name}</Text>
+          <Text style={styles.userName}>{authState?.user?.name}</Text>
         </View>
         <Image  source={require('../assets/images/ic_notif.png')} />
       </View>

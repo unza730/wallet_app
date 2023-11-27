@@ -30,6 +30,8 @@ import TransferSelect from '../screens/Transfer/TransferSelect';
 import CreateWallet from '../screens/Wallet/CreateWallet';
 import Wallet from '../screens/Wallet';
 import UploadImage from '../screens/Wallet/UploadImage';
+import PhoneNumberValidation from '../screens/RegisterScreen/phoneNumberValidation';
+import BatchCreationScreen from '../screens/Batch/CreateBatch'
 import BankList from '../screens/Banks/BankList';
 import AddFunds from '../screens/Banks/AddFunds';
 import PhoneNumberValidation from '../screens/RegisterScreen/phoneNumberValidation';
